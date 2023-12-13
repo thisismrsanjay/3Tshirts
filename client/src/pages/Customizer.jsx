@@ -9,7 +9,7 @@ import state from '../store'
 
 import {download, logoShirt} from '../assets';
 import { downloadCanvasToImage,reader } from '../config/helpers'
-import {EditorTabs , FilterTabs,DecalTypes} from '../config/constants'
+import {EditorTabs , FilterTabs,DecalTypes, MoveTabs} from '../config/constants'
 
 import { fadeAnimation,slideAnimation } from '../config/motion'
 
@@ -40,6 +40,26 @@ const Customizer = () => {
 
     }
   }
+  const handleMoveTab = (tab) =>{
+    switch(tab){
+     
+      case "up":
+        state.y += 0.01
+        break
+      case "down":
+        state.y -= 0.01
+        break
+      case "left":
+        state.x -= 0.01
+        break
+      case "right":
+        state.x += 0.01
+        break
+      default:
+        state.isFullTexture = true
+        state.isLogoTexture = false
+        break;
+    }}
   const handleActiveFilterTab = (tab) =>{
     switch(tab){
       case "logoShirt":
@@ -48,10 +68,25 @@ const Customizer = () => {
       case "stylishShirt":
         state.isFullTexture = !activeFilterTab[tab]
         break
+      case "plus":
+        state.scale += 0.01
+        break
+      case "minus":
+        state.scale -= 0.01
+        break
+      case "rotateleft":
+        console.log("hello")
+        state.rotate -= 0.25
+        break
+      case "rotateright":
+        state.rotate += 0.25
+        break
       default:
         state.isFullTexture = true
         state.isLogoTexture = false
+        break;
     }
+    
     //after setting state update activefilter
 
     setActiveFilterTab((prevState)=>{
@@ -61,6 +96,7 @@ const Customizer = () => {
       }
     })
   }
+  
   const readFile = (type) =>{
     reader(file)
       .then((result)=>{
@@ -119,7 +155,7 @@ const Customizer = () => {
       setActiveEditorTab("");
     }
   }
-
+  
   return (
     <AnimatePresence>
       {!snap.intro && (
@@ -141,7 +177,7 @@ const Customizer = () => {
               </div>
             </div>
           </motion.div>
-          <motion.div {...fadeAnimation} className='absolute z-10 top-5 right-5'>
+          <motion.div {...fadeAnimation} className='absolute z-20 top-5 right-5'>
                     <CustomButton
                       type="filled"
                       title = "back"
@@ -149,6 +185,33 @@ const Customizer = () => {
                       customStyles="w-fit px-4 py-2.5 font-bold text-sm"
                     />
           </motion.div>
+          
+          <motion.div className='movetabs-container' {...slideAnimation('up')}>
+          <div className="flex items-center min-h-screen">
+              <div className="editortabs-container tabs">
+          {MoveTabs.map((tab) => (
+                  <Tab
+                    key={tab.name}
+                    tab={tab}
+                    isFilterTab
+                    isActiveTab={activeFilterTab[tab.name]}
+                    handleClick={() =>handleMoveTab(tab.name)}
+                  />
+                ))}
+                 <button className='download-btn' onClick={downloadCanvasToImage}>
+              <img
+                src={download}
+                alt='download_image'
+                className='w-3/5 h-3/5 object-contain'
+              />
+            </button>
+                </div>
+                
+            </div>
+          </motion.div>
+
+
+
 
           <motion.div className='filtertabs-container' {...slideAnimation('up')}>
           {FilterTabs.map((tab) => (
@@ -160,11 +223,18 @@ const Customizer = () => {
                     handleClick={() =>handleActiveFilterTab(tab.name)}
                   />
                 ))}
+                
           </motion.div>
+          
+
+
+
         </>
       )}
     </AnimatePresence>
   )
 }
 
-export default Customizer
+
+
+export default Customizer;

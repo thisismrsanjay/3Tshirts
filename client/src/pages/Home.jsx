@@ -20,26 +20,19 @@ return (
         {snap.intro && (
             <motion.section className='home' {...slideAnimation('left')}>
                 <motion.header {...slideAnimation('down')}>
-                <img 
-              src='./threejs.png'
-              alt="logo"
-              className="w-8 h-8 object-contain"
-            />
+                    <p className='bold text-white font-mono text-2xl'>3Tshirts</p>
                 </motion.header>
 
                 <motion.div className='home-content' {...headContainerAnimation}>
                     <motion.div className='' {...headTextAnimation}>
-                        <h1 className='head-text'>
-                            LET'S <br className='xl:block hidden' /> DO IT.
+                        <h1 className='text-7xl font-mono text-white'>
+                            LET'S <br className='xl:block hidden' /> DESIGN IT.
                              
 
                         </h1>
                     </motion.div>
                     <motion.div className='flex flex-col gap-5' {...headContentAnimation}>
-                        <p className='max-w-md font-normal text-gray-600 text-base'>
-                            Create your own unique and exclusive shirt with our 3d custommization tool
-                            <strong>Unleash your imagination</strong>{" "} and define your own style.
-                        </p>
+                      
                         <CustomButton 
                             type="filled"
                             title="Start Designing"

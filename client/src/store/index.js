@@ -8,7 +8,11 @@ const state = proxy({
     isLogoTexture:true,
     isFullTexture:false,
     logoDecal : './iit.png',
-    fullDecal : './threejs.png'
+    fullDecal : './threejs.png',
+    x:0, //0.01
+    y:0.05, //0.01
+    scale : 0.15, //0.05
+    rotate: 0.1 
 });
 
 export default state;
